@@ -1,0 +1,38 @@
+{
+  "name": "openapi",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/openapi/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project openapi --web",
+  "targets": {
+    "start": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["redocly preview-docs"]
+      }
+    },
+    "build": {
+      "dependsOn": ["build:openapi", "build:angular"],
+      "builder": "@nrwl/workspace:no-op"
+    },
+    "build:openapi": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["redocly bundle -o swagger.yaml"]
+      }
+    },
+    "build:angular": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["openapi-generator-cli generate -i ../openapi/swagger.yaml -g typescript-angular -o ./src/api"]
+      }
+    },
+    "lint": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["redocly lint"]
+      }
+    }
+  }
+}

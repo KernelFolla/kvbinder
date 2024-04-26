@@ -1,0 +1,23 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: KVBinder API
+  description: |
+    This API allows you to GET and PUT JSON objects based on a key.
+tags:
+  - name: Item
+    description: "operations on items."
+x-tagGroups:
+  - name: General
+    tags:
+      - Item
+servers:
+  - url: https://{tenant}/api/v1
+    variables:
+      tenant:
+        default: www
+        description: Your tenant id
+  - url: https://example.com/api/v1
+paths:
+  '/items/{key}':
+    $ref: 'paths/items_{key}.yaml'

@@ -1,0 +1,71 @@
+get:
+  tags:
+    - Item
+  summary: Get item by key
+  description: |
+    This operation retrieves the item by its unique identifier.
+  operationId: getItem
+  parameters:
+    - name: key
+      in: path
+      description: The key of the item to retrieve.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successfull operation
+      content:
+        application/json:
+          schema:
+            type: object
+    '403':
+      description: Forbidden
+    '404':
+      description: Item not found
+put:
+  tags:
+    - Item
+  summary: Update or create an item by key
+  description: |
+    This operation updates or creates an item by its unique identifier.
+  operationId: updateItem
+  parameters:
+    - name: key
+      in: path
+      description: "The ID of the item to update."
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+    description: Updated item object
+    required: true
+  responses:
+    '200':
+      description: Successfully updated the item
+    '400':
+      description: Invalid key supplied
+delete:
+  tags:
+    - Item
+  summary: Delete an item by key
+  description: "This operation deletes all data associated with the requested `key`."
+  operationId: deleteItem
+  parameters:
+    - name: key
+      in: path
+      description: "The key of the item to delete."
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Successfully deleted a user
+    '400':
+      description: Invalid username provided
+    '404':
+      description: User not found

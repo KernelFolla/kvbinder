@@ -1,0 +1,94 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: KVBinder API
+  description: |
+    This API allows you to GET and PUT JSON objects based on a key.
+servers:
+  - url: https://{tenant}/api/v1
+    variables:
+      tenant:
+        default: www
+        description: Your tenant id
+  - url: https://example.com/api/v1
+tags:
+  - name: Item
+    description: operations on items.
+paths:
+  /items/{key}:
+    get:
+      tags:
+        - Item
+      summary: Get item by key
+      description: |
+        This operation retrieves the item by its unique identifier.
+      operationId: getItem
+      parameters:
+        - name: key
+          in: path
+          description: The key of the item to retrieve.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                type: object
+        '403':
+          description: Forbidden
+        '404':
+          description: Item not found
+    put:
+      tags:
+        - Item
+      summary: Update or create an item by key
+      description: |
+        This operation updates or creates an item by its unique identifier.
+      operationId: updateItem
+      parameters:
+        - name: key
+          in: path
+          description: The ID of the item to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        description: Updated item object
+        required: true
+      responses:
+        '200':
+          description: Successfully updated the item
+        '400':
+          description: Invalid key supplied
+    delete:
+      tags:
+        - Item
+      summary: Delete an item by key
+      description: This operation deletes all data associated with the requested `key`.
+      operationId: deleteItem
+      parameters:
+        - name: key
+          in: path
+          description: The key of the item to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully deleted a user
+        '400':
+          description: Invalid username provided
+        '404':
+          description: User not found
+components: {}
+x-tagGroups:
+  - name: General
+    tags:
+      - Item

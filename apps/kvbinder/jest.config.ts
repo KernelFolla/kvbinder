@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'kvbinder',
+  // displayName: 'kvbinder',
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
