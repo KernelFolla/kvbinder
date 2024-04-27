@@ -1,21 +1,28 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 version: 2
 updates:
-  - package-ecosystem: "npm" 
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
     target-branch: "main"
     labels:
       - "npm dependencies"
-  - package-ecosystem: "npm" 
+  - package-ecosystem: "npm"
     directory: "/apps/kvbinder"
     schedule:
       interval: "weekly"
     target-branch: "main"
     labels:
       - "npm dependencies"
-  - package-ecosystem: "npm" 
+  - package-ecosystem: "npm"
+    directory: "/apps/gui"
+    schedule:
+      interval: "weekly"
+    target-branch: "main"
+    labels:
+      - "npm dependencies"
+  - package-ecosystem: "npm"
     directory: "/libs/openapi"
     schedule:
       interval: "weekly"
