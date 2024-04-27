@@ -7,17 +7,30 @@
   "tags": [],
   "targets": {
     "build": {
+      "dependsOn": [
+        "openapi:build"
+      ],
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/gui",
         "index": "apps/gui/src/index.html",
         "browser": "apps/gui/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/gui/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/gui/src/favicon.ico", "apps/gui/src/assets"],
-        "styles": ["apps/gui/src/styles.scss"],
+        "assets": [
+          "apps/gui/src/favicon.ico",
+          "apps/gui/src/assets"
+        ],
+        "styles": [
+          "@angular/material/prebuilt-themes/indigo-pink.css",
+          "apps/gui/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -45,6 +58,12 @@
       "defaultConfiguration": "production"
     },
     "serve": {
+      "dependsOn": [
+        "openapi:build"
+      ],
+      "options": {
+        "proxyConfig": "apps/gui/proxy.conf.json"
+      },
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
@@ -67,7 +86,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/gui/jest.config.ts"
       }

@@ -23,6 +23,7 @@ get:
       description: Forbidden
     '404':
       description: Item not found
+  security: [ ]
 put:
   tags:
     - Item
@@ -49,6 +50,7 @@ put:
       description: Successfully updated the item
     '400':
       description: Invalid key supplied
+  security: [ ]
 delete:
   tags:
     - Item
@@ -69,3 +71,4 @@ delete:
       description: Invalid username provided
     '404':
       description: User not found
+  security: []

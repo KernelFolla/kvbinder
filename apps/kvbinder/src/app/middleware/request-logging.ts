@@ -1,6 +1,5 @@
-// middleware/request-logging.ts
 import { Logger } from '@nestjs/common';
-import morgan, { format } from 'morgan';
+import morgan from 'morgan';
 
 export function useRequestLogging(app) {
   const logger = new Logger('Request');

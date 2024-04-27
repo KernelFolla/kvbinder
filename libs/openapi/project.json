@@ -4,34 +4,55 @@
   "sourceRoot": "libs/openapi/src",
   "projectType": "library",
   "tags": [],
-  "// targets": "to see all targets run: nx show project openapi --web",
+   "// targets": "to see all targets run: nx show project openapi --web",
   "targets": {
     "start": {
-      "builder": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
-        "commands": ["redocly preview-docs"]
+        "commands": [
+          "redocly preview-docs"
+        ]
       }
     },
     "build": {
-      "dependsOn": ["build:openapi", "build:angular"],
-      "builder": "@nrwl/workspace:no-op"
+      "cache": true,
+      "dependsOn": [
+        "build-openapi",
+        "build-angular"
+      ],
+      "executor": "nx:noop",
+      "inputs": ["{projectRoot}/**/*"]
     },
-    "build:openapi": {
-      "builder": "@nrwl/workspace:run-commands",
+    "build-openapi": {
+      "cache": true,
+      "executor": "nx:run-commands",
       "options": {
-        "commands": ["redocly bundle -o swagger.yaml"]
-      }
+        "commands": [
+          "redocly bundle -o libs/openapi/swagger.yaml libs/openapi/openapi/openapi.yaml"
+        ]
+      },
+      "inputs": ["{projectRoot}/**/*"]
     },
-    "build:angular": {
-      "builder": "@nrwl/workspace:run-commands",
+    "build-angular": {
+      "cache": true,
+      "dependsOn": [
+        "build-openapi"
+      ],
+      "executor": "nx:run-commands",
       "options": {
-        "commands": ["openapi-generator-cli generate -i ../openapi/swagger.yaml -g typescript-angular -o ./src/api"]
-      }
+        "commands": [
+          "openapi-generator-cli generate -i  libs/openapi/swagger.yaml -g typescript-angular -o libs/api-client-angular/src"
+        ]
+      },
+      "inputs": ["{projectRoot}/**/*"]
     },
     "lint": {
-      "builder": "@nrwl/workspace:run-commands",
+      "cache": true,
+      "executor": "nx:run-commands",
       "options": {
-        "commands": ["redocly lint"]
+        "commands": [
+          "redocly lint libs/openapi/openapi/openapi.yaml"
+        ]
       }
     }
   }

@@ -5,12 +5,5 @@
     "@redocly/cli": "^1.12.0",
     "@openapitools/openapi-generator-cli": "^2.10.0"
   },
-  "private": true,
-  "scripts": {
-    "start": "redocly preview-docs",
-    "build": "npm run build:openapi; npm run build:angular",
-    "build:openapi": "redocly bundle -o dist",
-    "build:angular": "openapi-generator-cli generate -i ../openapi/dist.yaml -g typescript-angular -o ./src/api",
-    "lint": "redocly lint"
-  }
+  "private": true
 }

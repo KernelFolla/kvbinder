@@ -2,6 +2,9 @@ openapi: 3.1.0
 info:
   version: 1.0.0
   title: KVBinder API
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
   description: |
     This API allows you to GET and PUT JSON objects based on a key.
 tags:
@@ -12,12 +15,11 @@ x-tagGroups:
     tags:
       - Item
 servers:
-  - url: https://{tenant}/api/v1
+  - url: "{server}/api"
     variables:
-      tenant:
-        default: www
-        description: Your tenant id
-  - url: https://example.com/api/v1
+      server:
+        default: "http://localhost:3000"
+        description: Your server base url
 paths:
   '/items/{key}':
     $ref: 'paths/items_{key}.yaml'

@@ -1,6 +1,8 @@
 export interface ItemsStore {
   set(key: string, value: unknown): Promise<void>;
+
   get(key: string): Promise<unknown>;
+
   delete(key: string): Promise<void>;
 }
 
