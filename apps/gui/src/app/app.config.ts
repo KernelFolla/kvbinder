@@ -4,13 +4,18 @@ import { appRoutes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ApiModule, Configuration } from '@kvbinder/api-client-angular';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxBackButtonModule } from 'ngx-back-button';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes),
     provideAnimationsAsync(),
-    importProvidersFrom(HttpClientModule, ApiModule.forRoot(() => new Configuration({
-      basePath: 'http://localhost:4200/api'
-    })))
+    importProvidersFrom(
+      HttpClientModule,
+      ApiModule.forRoot(() => new Configuration({
+        basePath: 'http://localhost:4200/api'
+      })),
+      NgxBackButtonModule.forRoot({})
+    )
   ]
 };

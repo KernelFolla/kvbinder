@@ -5,14 +5,16 @@ import { ItemsService } from './items.service';
 import { CacheModule } from '@nestjs/cache-manager';
 import { CacheItemsStore } from './cache-items.store';
 import { FileItemsStore } from './file-items.store';
+import { KeysController } from './keys.controller';
 
 @Module({
   imports: [CacheModule.register()],
-  controllers: [ItemsController],
+  controllers: [ItemsController, KeysController],
   providers: [
     { provide: 'PERSISTENCE_STRATEGY', useClass: FileItemsStore },
     { provide: 'CACHE_STRATEGY', useClass: CacheItemsStore },
     ItemsService],
-  exports: [CacheModule],
+  exports: [CacheModule]
 })
-export class ItemsModule {}
+export class ItemsModule {
+}

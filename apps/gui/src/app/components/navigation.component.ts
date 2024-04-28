@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -18,7 +19,8 @@ import { map, shareReplay } from 'rxjs/operators';
     MatSidenavModule,
     MatListModule,
     MatIconModule,
-    AsyncPipe
+    AsyncPipe,
+    RouterLink
   ],
   template: `
     <mat-sidenav-container class="sidenav-container">
@@ -28,9 +30,11 @@ import { map, shareReplay } from 'rxjs/operators';
                    [opened]="(isHandset$ | async) === false">
         <mat-toolbar>Menu</mat-toolbar>
         <mat-nav-list>
-          <a mat-list-item href="#">Link 1</a>
-          <a mat-list-item href="#">Link 2</a>
-          <a mat-list-item href="#">Link 3</a>
+          <a mat-list-item [routerLink]="'/dashboard'">Dashboard</a>
+          <a mat-list-item [routerLink]="'/items'">Items</a>
+          <a mat-list-item [routerLink]="'/items-new'">New Item</a>
+          <a mat-list-item [routerLink]="'/items-import'">Import Items</a>
+          <a mat-list-item [routerLink]="'/items-export'">Export Items</a>
         </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content>

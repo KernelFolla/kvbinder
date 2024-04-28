@@ -21,5 +21,13 @@ servers:
         default: "http://localhost:3000"
         description: Your server base url
 paths:
+  '/items':
+    $ref: 'paths/items.yaml'
   '/items/{key}':
     $ref: 'paths/items_{key}.yaml'
+  '/keys':
+    $ref: 'paths/keys.yaml'
+components:
+  schemas:
+    Item:
+      $ref: 'components/schemas/Item.yaml'

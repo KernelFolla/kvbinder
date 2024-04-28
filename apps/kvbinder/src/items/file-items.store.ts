@@ -10,10 +10,10 @@ export class FileItemsStore implements ItemsStore {
   constructor() {
     // Ensure the data directory exists
     if (!fs.existsSync(this.storagePath)) {
-      Logger.debug(`Creating storage directory at ${this.storagePath}`)
+      Logger.debug(`Creating storage directory at ${this.storagePath}`);
       fs.mkdirSync(this.storagePath);
-    }else{
-      Logger.debug(`Storage directory already exists at ${this.storagePath}`)
+    } else {
+      Logger.debug(`Storage directory already exists at ${this.storagePath}`);
     }
   }
 
@@ -45,5 +45,25 @@ export class FileItemsStore implements ItemsStore {
 
   private getFilePathForKey(key: string): string {
     return path.join(this.storagePath, `${key}.json`);
+  }
+
+  private getKeyFromFilePath(filePath: string): string {
+    return filePath.replace('.json', '');
+  }
+
+  async all(): Promise<unknown[]> {
+    const files = fs.readdirSync(this.storagePath);
+    return files.map((file) => {
+      const data = fs.readFileSync(path.join(this.storagePath, file), 'utf-8');
+      return {
+        key: this.getKeyFromFilePath(file),
+        value: JSON.parse(data)
+      };
+    });
+  }
+
+  async keys(): Promise<string[]> {
+    const files = fs.readdirSync(this.storagePath);
+    return files.map((file) => this.getKeyFromFilePath(file));
   }
 }

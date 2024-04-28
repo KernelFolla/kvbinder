@@ -5,10 +5,11 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 @Injectable()
 export class CacheItemsStore implements ItemsStore {
-  constructor(@Inject(CACHE_MANAGER) private cache: Cache,) {}
+  constructor(@Inject(CACHE_MANAGER) private cache: Cache) {
+  }
 
   async set(key: string, value: unknown): Promise<void> {
-    await this.cache.set(key, value, 60 * 60 * 24 * 365)
+    await this.cache.set(key, value, 60 * 60 * 24 * 365);
   }
 
   async get(key: string): Promise<unknown> {
@@ -17,5 +18,13 @@ export class CacheItemsStore implements ItemsStore {
 
   async delete(key: string): Promise<void> {
     await this.cache.del(key);
+  }
+
+  async all(): Promise<unknown[]> {
+    throw new Error('Method not implemented.');
+  }
+  
+  async keys(): Promise<string[]> {
+    throw new Error('Method not implemented.');
   }
 }

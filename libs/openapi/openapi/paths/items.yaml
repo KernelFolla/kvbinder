@@ -1,0 +1,39 @@
+get:
+  tags:
+    - Item
+  summary: Get items
+  description: |
+    This operation retrieves all the item
+  operationId: getItems
+  responses:
+    '200':
+      description: Successfull operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../components/schemas/Item.yaml'
+    '403':
+      description: Forbidden
+    '404':
+      description: Item not found
+  security: [ ]
+post:
+  tags:
+    - Item
+  summary: import a set of items
+  description: |
+    This operation adds all the items
+  operationId: importItems
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../components/schemas/Item.yaml'
+  responses:
+    '200':
+      description: Successfull operation
+  security: [ ]

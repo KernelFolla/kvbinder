@@ -1,0 +1,17 @@
+get:
+  tags:
+    - Item
+  summary: Get only keys
+  description: |
+    This operation retrieves all the keys
+  operationId: getKeys
+  responses:
+    '200':
+      description: Successfull operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: string
+  security: [ ]
