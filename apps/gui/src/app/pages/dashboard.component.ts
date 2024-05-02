@@ -1,16 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ItemFormComponent } from '../components/item-form.component';
 import { NavigationComponent } from '../components/navigation.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ItemFormComponent, NavigationComponent],
+  imports: [CommonModule, NavigationComponent, RouterTestingModule],
   template: `
-    <app-navigation>
-      <h1>Dashboard</h1>
-    </app-navigation>
+    <h1>Dashboard</h1>
   `,
   styles: ``
 })

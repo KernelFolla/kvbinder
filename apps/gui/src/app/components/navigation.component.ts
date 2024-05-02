@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, KeyValuePipe, NgForOf } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -20,7 +20,10 @@ import { RouterLink } from '@angular/router';
     MatListModule,
     MatIconModule,
     AsyncPipe,
-    RouterLink
+    RouterLink,
+    NgForOf,
+    KeyValuePipe,
+    RouterLinkActive
   ],
   template: `
     <mat-sidenav-container class="sidenav-container">
@@ -30,11 +33,12 @@ import { RouterLink } from '@angular/router';
                    [opened]="(isHandset$ | async) === false">
         <mat-toolbar>Menu</mat-toolbar>
         <mat-nav-list>
-          <a mat-list-item [routerLink]="'/dashboard'">Dashboard</a>
-          <a mat-list-item [routerLink]="'/items'">Items</a>
-          <a mat-list-item [routerLink]="'/items-new'">New Item</a>
-          <a mat-list-item [routerLink]="'/items-import'">Import Items</a>
-          <a mat-list-item [routerLink]="'/items-export'">Export Items</a>
+          <a
+            *ngFor="let item of menuItems | keyvalue"
+            mat-list-item
+            [routerLinkActive]="['is-active']"
+            [routerLink]="item.key"
+          >{{ item.value }}</a>
         </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content>
@@ -78,6 +82,10 @@ import { RouterLink } from '@angular/router';
     .content {
       padding: 1rem;
     }
+
+    mat-nav-list a.is-active {
+      text-decoration: underline;
+    }
   `]
 })
 export class NavigationComponent {
@@ -88,4 +96,11 @@ export class NavigationComponent {
       map(result => result.matches),
       shareReplay()
     );
+  menuItems = {
+    ['/dashboard']: 'Dashboard',
+    ['/items']: 'Items',
+    ['/items-new']: 'New Item',
+    ['/items-import']: 'Import Items',
+    ['/items-export']: 'Export Items'
+  };
 }

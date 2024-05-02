@@ -28,7 +28,6 @@ export class ItemsController {
   @Post()
   async importItems(@Body() body: Item[]) {
     Logger.debug('Importing items', body);
-    if (typeof body !== 'object') throw new Error('Body must be an object');
     await Promise.all(body.map(async item => {
       await this.service.set(item.key, item.value);
     }));

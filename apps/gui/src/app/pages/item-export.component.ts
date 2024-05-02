@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ItemService } from '@kvbinder/api-client-angular';
 import { ItemFormComponent } from '../components/item-form.component';
-import { NavigationComponent } from '../components/navigation.component';
 import { NgxBackButtonService } from 'ngx-back-button';
 import { MatButton } from '@angular/material/button';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
@@ -28,22 +27,20 @@ const JSONToFile = (obj: object, filename: string) => {
 @Component({
   selector: 'app-item-import',
   standalone: true,
-  imports: [CommonModule, ItemFormComponent, NavigationComponent, MatButton, MatError, MatFormField, MatInput, MatLabel, MatToolbar, ReactiveFormsModule, MatIcon, MatProgressBar],
+  imports: [CommonModule, ItemFormComponent, MatButton, MatError, MatFormField, MatInput, MatLabel, MatToolbar, ReactiveFormsModule, MatIcon, MatProgressBar],
   template: `
-    <app-navigation>
-      <h1>Export Items</h1>
-      <mat-toolbar class="form-actions">
-        <button mat-raised-button (click)="onDownload()">Download</button>
-        <button mat-raised-button (click)="onShow()">Show</button>
-        <button mat-raised-button (click)="onUndo()">Undo</button>
-      </mat-toolbar>
-      @if (isLoading) {
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      }
-      @if (items) {
-        {{ items | json }}
-      }
-    </app-navigation>
+    <h1>Export Items</h1>
+    <mat-toolbar class="form-actions">
+      <button mat-raised-button (click)="onDownload()">Download</button>
+      <button mat-raised-button (click)="onShow()">Show</button>
+      <button mat-raised-button (click)="onUndo()">Undo</button>
+    </mat-toolbar>
+    @if (isLoading) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+    @if (items) {
+      {{ items | json }}
+    }
   `,
   styles: ``
 })

@@ -34,8 +34,12 @@ export interface Item {
         </mat-form-field>
       </div>
       <mat-toolbar class="form-actions">
-        <button mat-raised-button type="submit" color="primary" [disabled]="form.invalid">Submit</button>
-        <button mat-raised-button (click)="onUndo()">Undo</button>
+        <button aria-label="Submit" mat-raised-button type="submit" color="primary" [disabled]="form.invalid">
+          Submit
+        </button>
+        <button aria-label="Undo" mat-raised-button (click)="onUndo()">
+          Undo
+        </button>
       </mat-toolbar>
     </form>
   `,

@@ -6,8 +6,11 @@ import { NavigationComponent } from './components/navigation.component';
   standalone: true,
   imports: [RouterModule, NavigationComponent],
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  template: `
+    <app-navigation>
+      <router-outlet></router-outlet>
+    </app-navigation>
+  `
 })
 export class AppComponent {
   title = 'gui';

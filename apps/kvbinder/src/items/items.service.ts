@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ItemsQueryDto, ItemsStore, KeysQueryDto } from './types';
+import { paginate } from '../utils';
 
 @Injectable()
 export class ItemsService {
@@ -38,7 +39,7 @@ export class ItemsService {
 
   async findAll({ page, limit }: ItemsQueryDto): Promise<unknown[]> {
     const items = await this.persistenceStrategy.all();
-    return this.paginate(items, page, limit);
+    return paginate(items, page, limit);
   }
 
   async findAllKeys(query: KeysQueryDto): Promise<string[]> {
@@ -47,14 +48,6 @@ export class ItemsService {
       if (query.startsWith) return key.startsWith(query.startsWith);
       if (query.query) return key.includes(query.query);
     });
-    return this.paginate(keys, query.page, query.limit);
-  }
-
-  private paginate<T>(items: T[], page: number, limit: number): T[] {
-    if (!limit) {
-      return items;
-    }
-    const offset = ((page || 1) - 1) * limit;
-    return items.slice(offset, offset + limit);
+    return paginate(keys, query.page, query.limit);
   }
 }

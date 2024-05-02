@@ -2,6 +2,7 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ItemsStore } from './types';
+import { restoreFilename, sanitizeFilename } from './file-items.utils';
 
 @Injectable()
 export class FileItemsStore implements ItemsStore {
@@ -19,6 +20,7 @@ export class FileItemsStore implements ItemsStore {
 
   async get(key: string): Promise<unknown> {
     const filePath = this.getFilePathForKey(key);
+    console.log(filePath);
     Logger.debug(`Reading file at ${filePath}`);
     if (fs.existsSync(filePath)) {
       const data = fs.readFileSync(filePath, 'utf-8');
@@ -44,11 +46,11 @@ export class FileItemsStore implements ItemsStore {
   }
 
   private getFilePathForKey(key: string): string {
-    return path.join(this.storagePath, `${key}.json`);
+    return path.join(this.storagePath, `${sanitizeFilename(key)}.json`);
   }
 
   private getKeyFromFilePath(filePath: string): string {
-    return filePath.replace('.json', '');
+    return restoreFilename(filePath.replace('.json', ''));
   }
 
   async all(): Promise<unknown[]> {

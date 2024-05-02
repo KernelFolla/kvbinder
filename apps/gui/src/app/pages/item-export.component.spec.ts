@@ -1,36 +1,33 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ItemCreateComponent } from './item-create.component';
+import { ItemExportComponent } from './item-export.component';
 import { ItemService } from '@kvbinder/api-client-angular';
-import { of } from 'rxjs';
 import { NgxBackButtonService } from 'ngx-back-button';
+import { of } from 'rxjs';
 
-describe('ItemCreateComponent', () => {
-  let component: ItemCreateComponent;
-  let fixture: ComponentFixture<ItemCreateComponent>;
+describe('ItemExportComponent', () => {
+  let component: ItemExportComponent;
+  let fixture: ComponentFixture<ItemExportComponent>;
   let itemService: ItemService;
   let backButtonService: NgxBackButtonService;
 
   beforeEach(async () => {
     const itemServiceMock = {
-      updateItem: jest.fn().mockReturnValue(of(null))
+      getItems: jest.fn().mockReturnValue(of([{ id: 1, name: 'Test Item' }]))
+    };
+
+    const backButtonServiceMock = {
+      back: jest.fn()
     };
 
     await TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        MatSnackBarModule,
-        ItemCreateComponent
-      ],
-      declarations: [],
+      imports: [ItemExportComponent],
       providers: [
         { provide: ItemService, useValue: itemServiceMock },
-        { provide: NgxBackButtonService, useValue: { back: jest.fn() } }
+        { provide: NgxBackButtonService, useValue: backButtonServiceMock }
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ItemCreateComponent);
+    fixture = TestBed.createComponent(ItemExportComponent);
     component = fixture.componentInstance;
     itemService = TestBed.inject(ItemService);
     backButtonService = TestBed.inject(NgxBackButtonService);
@@ -41,10 +38,16 @@ describe('ItemCreateComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call updateItem on form submit', () => {
-    const updateItemSpy = jest.spyOn(itemService, 'updateItem');
-    component.onSubmit({ key: 'testKey', value: { x: 'testValue' } });
-    expect(updateItemSpy).toHaveBeenCalledWith('testKey', { x: 'testValue' });
+  it('should call getItems on download', () => {
+    const getItemsSpy = jest.spyOn(itemService, 'getItems');
+    component.onDownload();
+    expect(getItemsSpy).toHaveBeenCalled();
+  });
+
+  it('should call getItems on show', () => {
+    const getItemsSpy = jest.spyOn(itemService, 'getItems');
+    component.onShow();
+    expect(getItemsSpy).toHaveBeenCalled();
   });
 
   it('should call back service on undo', () => {

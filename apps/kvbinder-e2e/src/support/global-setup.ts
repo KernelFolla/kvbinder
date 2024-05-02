@@ -1,10 +1,23 @@
+import { exec } from 'child_process';
+
 /* eslint-disable */
 var __TEARDOWN_MESSAGE__: string;
 
-module.exports = async function () {
-  // Start services that that the app needs to run (e.g. database, docker-compose, etc.).
+module.exports = async function() {
   console.log('\nSetting up...\n');
 
-  // Hint: Use `globalThis` to pass variables to global teardown.
+
+  exec('npm run api:start', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error starting service: ${error}`);
+      return;
+    }
+    if (stderr) {
+      console.error(`Error starting service: ${stderr}`);
+      return;
+    }
+    console.log(`Service started: ${stdout}`);
+  });
+
   globalThis.__TEARDOWN_MESSAGE__ = '\nTearing down...\n';
 };

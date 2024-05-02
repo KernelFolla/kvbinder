@@ -4,13 +4,13 @@
   "sourceRoot": "libs/openapi/src",
   "projectType": "library",
   "tags": [],
-   "// targets": "to see all targets run: nx show project openapi --web",
+  "// targets": "to see all targets run: nx show project openapi --web",
   "targets": {
-    "start": {
+    "serve": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "redocly preview-docs"
+          "redocly preview-docs libs/openapi/openapi/openapi.yaml"
         ]
       }
     },
@@ -21,7 +21,9 @@
         "build-angular"
       ],
       "executor": "nx:noop",
-      "inputs": ["{projectRoot}/**/*"]
+      "inputs": [
+        "{projectRoot}/**/*"
+      ]
     },
     "build-openapi": {
       "cache": true,
@@ -31,7 +33,9 @@
           "redocly bundle -o libs/openapi/swagger.yaml libs/openapi/openapi/openapi.yaml"
         ]
       },
-      "inputs": ["{projectRoot}/**/*"]
+      "inputs": [
+        "{projectRoot}/**/*"
+      ]
     },
     "build-angular": {
       "cache": true,
@@ -44,7 +48,9 @@
           "openapi-generator-cli generate -i  libs/openapi/swagger.yaml -g typescript-angular -o libs/api-client-angular/src"
         ]
       },
-      "inputs": ["{projectRoot}/**/*"]
+      "inputs": [
+        "{projectRoot}/**/*"
+      ]
     },
     "lint": {
       "cache": true,

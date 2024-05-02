@@ -5,7 +5,6 @@ import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Item, ItemService } from '@kvbinder/api-client-angular';
 import { ItemFormComponent } from '../components/item-form.component';
-import { NavigationComponent } from '../components/navigation.component';
 import { MatButton } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,27 +14,26 @@ import { NgxBackButtonService } from 'ngx-back-button';
 @Component({
   selector: 'app-item-detail',
   standalone: true,
-  imports: [CommonModule, ItemFormComponent, NavigationComponent, MatButton, RouterLink, MatDivider, MatToolbar],
+  imports: [CommonModule, ItemFormComponent, MatButton, RouterLink, MatDivider, MatToolbar],
   template: `
-    <app-navigation>
-      <ng-container *ngIf="item$ | async as item; else loading">
-        <div *ngIf="isEditing; else detail">
-          <h1>Edit item "{{ item.key }}"</h1>
-          <app-item-form [item]="item" (formSubmit)="onEditSubmit($event)" (undo)="onEditUndo()"></app-item-form>
-        </div>
-        <ng-template #detail>
-          <h1>Item detail "{{ item.key }}"</h1>
-          <mat-divider></mat-divider>
-          {{ item.value | json }}
-          <mat-divider></mat-divider>
-          <mat-toolbar class="form-actions">
-            <button mat-raised-button color="primary" (click)="isEditing = true">Edit</button>
-            <button mat-raised-button color="warn" (click)="onDelete(item.key)">Delete</button>
-          </mat-toolbar>
-        </ng-template>
-      </ng-container>
-      <ng-template #loading>loading...</ng-template>
-    </app-navigation>`,
+    <ng-container *ngIf="item$ | async as item; else loading">
+      <div *ngIf="isEditing; else detail">
+        <h1>Edit item "{{ item.key }}"</h1>
+        <app-item-form [item]="item" (formSubmit)="onEditSubmit($event)" (undo)="onEditUndo()"></app-item-form>
+      </div>
+      <ng-template #detail>
+        <h1>Item detail "{{ item.key }}"</h1>
+        <mat-divider></mat-divider>
+        {{ item.value | json }}
+        <mat-divider></mat-divider>
+        <mat-toolbar class="form-actions">
+          <button mat-raised-button color="primary" (click)="isEditing = true">Edit</button>
+          <button mat-raised-button color="warn" (click)="onDelete(item.key)">Delete</button>
+        </mat-toolbar>
+      </ng-template>
+    </ng-container>
+    <ng-template #loading>loading...</ng-template>
+  `,
   styles: `
     mat-divider {
       margin: 1rem 0;
